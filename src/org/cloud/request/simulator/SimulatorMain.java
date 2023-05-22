@@ -14,7 +14,7 @@ import org.cloud.host.core.Host;
 import org.cloud.request.core.Request;
 
 public class SimulatorMain {
-	private static final int REQUEST_NUMBER=200;
+	private static final int REQUEST_NUMBER=100;
 	private static final int MAX_NUM_OF_REQ_PER_CONTAINER=10;
 	
 	public static int genRandomNumber(int Min,int Max) {
