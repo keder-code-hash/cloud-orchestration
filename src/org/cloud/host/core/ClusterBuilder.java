@@ -5,7 +5,7 @@ import java.lang.Math;
 import org.cloud.container.clusterbuilder.selectionpolicy.FCFS;
 import org.cloud.container.core.Container;
 import org.cloud.container.core.ContainerEdge;
-
+import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author keder
  *	Responsible for making clustered container based on their newtWorkTransfer rate
@@ -28,14 +28,17 @@ public class ClusterBuilder {
 		this.getPolicyFilteredContainers();
 	}
 	
+	public int generateRandomNumber(int upperBound) {
+		return ThreadLocalRandom.current().nextInt(0, upperBound + 1);
+	}
 	/**
 	 * Set the Network Transfer Rate for each of the container
 	 * */
 	public void setNetwrokTransferRate() {
 		int totalContainer = this.availableContainersList.size();
 		
-		for(int i=0;i<totalContainer;i++) {
-			for(int j=0;j<totalContainer;j++) {
+		for(int i=0;i<generateRandomNumber(totalContainer);i++) {
+			for(int j=0;j<generateRandomNumber(totalContainer);j++) {
 				int netwrokTransferRate = (int)(Math.random()*(maxNetworkTransferRate-minNetworkTransferRate+1)+minNetworkTransferRate);
 				if(i==j) {
 					netwrokTransferRate=0;
