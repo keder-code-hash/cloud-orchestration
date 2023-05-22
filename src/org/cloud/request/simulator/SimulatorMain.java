@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.cloud.container.clusterbuilder.selectionpolicy.MinCut;
 import org.cloud.container.core.Container;
 import org.cloud.container.core.ContainerEdge;
 import org.cloud.host.core.ClusterBuilder;
@@ -14,8 +15,8 @@ import org.cloud.host.core.Host;
 import org.cloud.request.core.Request;
 
 public class SimulatorMain {
-	private static final int REQUEST_NUMBER=100;
-	private static final int MAX_NUM_OF_REQ_PER_CONTAINER=10;
+	private static final int REQUEST_NUMBER=200;
+	private static final int MAX_NUM_OF_REQ_PER_CONTAINER=20;
 	
 	public static int genRandomNumber(int Min,int Max) {
 		return Min + (int)(Math.random() * ((Max - Min) + 1));
@@ -61,19 +62,21 @@ public class SimulatorMain {
 		ArrayList<Container>containerPooL= new ArrayList<>();
 		containerPooL=choppedRequestIntoContainer(requestArrayList, MAX_NUM_OF_REQ_PER_CONTAINER);
 		
-		// MAKING GRAPH OUT OF ALL CONTAINERS 
-		ClusterBuilder clusterListBuilder = new ClusterBuilder(containerPooL);
-		ArrayList<Map<Integer, LinkedList<ContainerEdge>>> clusteredContainers=clusterListBuilder.getClusteredContainerList();
+		System.out.println(containerPooL.size());
 		
-		// ALLOCATING THE CLUSTER TO THE HOST
-		int hostId=0;
-		for(Map<Integer, LinkedList<ContainerEdge>> clusteredContainer:clusteredContainers) {
-			LocalDateTime hostScheduleDateTime = LocalDateTime.now();
-			Host host =new Host(hostId, hostScheduleDateTime, clusteredContainer);
-			host.printHostDetails();
-		}
+//		// MAKING GRAPH OUT OF ALL CONTAINERS 
+//		ClusterBuilder clusterListBuilder = new ClusterBuilder(containerPooL);
+//		ArrayList<Map<Integer, LinkedList<ContainerEdge>>> clusteredContainers=clusterListBuilder.getClusteredContainerList();
+//		
+//		// ALLOCATING THE CLUSTER TO THE HOST
+//		int hostId=0;
+//		for(Map<Integer, LinkedList<ContainerEdge>> clusteredContainer:clusteredContainers) {
+//			LocalDateTime hostScheduleDateTime = LocalDateTime.now();
+//			Host host =new Host(hostId, hostScheduleDateTime, clusteredContainer);
+//			host.printHostDetails();
+//		}
 
-		
+		MinCut.generateCut(containerPooL);
 		
 	}
 }
